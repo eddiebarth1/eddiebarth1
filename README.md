@@ -3,7 +3,7 @@
 - 🌱 I’m currently learning GoLang
 - 📫 How to reach me...
     * e-mail: eddiebarth1+dev@gmail.com
-    * medium: https://medium.com/@eddiebarth1
+    * medium: https://eddiebarth.medium.com
 
 <!---
 eddiebarth1/eddiebarth1 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
