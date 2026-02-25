@@ -1,5 +1,24 @@
 Perform a performance audit of this codebase. Identify bottlenecks, inefficient patterns, memory issues, and missed optimization opportunities. Produce concrete, actionable findings with specific file locations - not generic advice.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/performance-analyzer.json 2>/dev/null
+cat .claude-learning/git-history-miner.json 2>/dev/null
+```
+
+**If manifest.json exists**: Use `scope_boundaries.source` to scope all grep commands below. Skip `scope_boundaries.vendor`, `scope_boundaries.generated`, and `scope_boundaries.tests`.
+
+**If performance-analyzer.json exists**: Load prior findings. Focus on extending them — verify listed hotspots are still present, check if any were fixed, and identify new hotspots introduced since the last run.
+
+**If git-history-miner.json exists**: Use `hotspots` (files that change often) to prioritize where to look first — high-churn files with performance issues create the most ongoing drag. Use `ownership_map` to add context about who to route fixes to.
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: Application Type and Performance Profile
 
 Understand what kind of performance matters here:

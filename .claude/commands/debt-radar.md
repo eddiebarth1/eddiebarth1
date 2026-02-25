@@ -1,5 +1,27 @@
 Perform a technical debt analysis of this codebase. Surface complexity hotspots, code smells, architectural debt, and risky abstractions. Produce a prioritized list of what to address and in what order - not a laundry list, but a strategic assessment.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/codebase-indexer.json 2>/dev/null
+cat .claude-learning/git-history-miner.json 2>/dev/null
+cat .claude-learning/edge-failure-mapper.json 2>/dev/null
+```
+
+**If manifest.json exists**: Use `scope_boundaries.source` to scope all grep commands — skip vendor/generated/test paths.
+
+**If codebase-indexer.json exists**: Use `modules` for the list of files to assess. Use `conventions` to identify deviations (code that doesn't follow established patterns is a form of debt). Use `patterns.architecture` to identify structural mismatches.
+
+**If git-history-miner.json exists**: Use `hotspots` (high-churn files) as your top-priority debt candidates — files that change often and have complexity are the most expensive debt to carry. Use `inline_knowledge` (TODO/FIXME/HACK comments) as self-documented debt — these are guaranteed finds for Phase 2. Use `decisions` to distinguish intentional architectural choices from unintentional accumulation.
+
+**If edge-failure-mapper.json exists**: Use `uncovered_edges` and high-severity `failure_modes` as a debt signal — unhandled failure paths are reliability debt. Use `validation_rules` to identify where input handling is inconsistent.
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: Complexity Hotspots
 
 Find the most complex code in the codebase:

@@ -1,5 +1,24 @@
 Generate a comprehensive architectural map of this codebase. The goal is a precise, reference-quality understanding of how all the pieces fit together - the kind of knowledge a new senior engineer would need to confidently design new features or debug production incidents.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/codebase-indexer.json 2>/dev/null
+cat .claude-learning/dependency-mapper.json 2>/dev/null
+```
+
+**If manifest.json exists**: Use `top_level_modules` and `entry_points` as the starting frame for your structural map. Use `scope_boundaries` to focus grep commands on source directories and avoid vendor/generated code.
+
+**If codebase-indexer.json exists**: Use `modules` as the foundation of your module inventory — you don't need to rediscover the module structure. Use `patterns.architecture` as a hypothesis to validate, and `conventions` for cross-cutting concerns. Focus your reading on verifying and deepening what's there, not rediscovering it.
+
+**If dependency-mapper.json exists**: Use `api_surface` for the API inventory, `external_services` for the system context diagram, `coupling_hotspots` for architectural risk areas, and `implicit_contracts` for hidden dependencies between layers.
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: System Boundaries
 
 1. What type of system is this? (monolith, microservice, library, CLI tool, serverless, etc.)

@@ -1,5 +1,28 @@
 Generate a comprehensive onboarding guide for a new developer joining this project. The guide should be derived entirely from reading the codebase, git history, and configuration - not generic advice. When you're done, a new engineer should be able to get the project running, understand what they're looking at, and make a confident first contribution.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/synthesis.json 2>/dev/null
+```
+
+**If synthesis.json exists**: This is the most comprehensive onboarding resource available — it's already synthesized everything an engineer needs. Use it as follows:
+- **Tier 1 decisions** → "Why It's Built This Way" section: explain architectural choices upfront so new engineers don't question them or accidentally undo them
+- **Tier 1 gotchas** → "Gotchas and Tribal Knowledge" section (Phase 7): use these verbatim with their evidence context
+- **Tier 1 conventions** → "Development Workflow / Code Style" section (Phase 5): documented conventions become explicit onboarding rules
+- **Tier 2 module_index** → "Codebase Tour" section (Phase 3): use as the guided tour structure
+- **Tier 2 api_surface** → API surface section: pre-built inventory of endpoints
+- **Tier 2 test_coverage.well_tested** → highlight the areas with good tests as safe places for a first contribution
+- **Tier 2 ownership** → "Who to Ask" section: derive from the ownership map
+- **Tier 3 by_task** → "Common Tasks" section (Phase 6): use retrieval recipes as the "how to find the right file" reference
+
+You still need to derive local setup steps (Phase 2) from config files — synthesis doesn't capture those.
+
+**If no context exists**: Proceed with the phases below, doing full discovery. Consider running `/deep-learn` first for a significantly richer onboarding guide.
+
 ## Phase 1: Project Context
 
 Read everything that gives project-level context:

@@ -1,5 +1,21 @@
 Perform a comprehensive dependency audit of this codebase. Map every external dependency, assess the risk each one carries, identify vulnerabilities, and surface opportunities to simplify or upgrade.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/dependency-mapper.json 2>/dev/null
+```
+
+**If manifest.json exists**: Use `external_dependencies` for the initial package list and `package_manager` to know which lockfile and audit tool to reach for. Use `scope_boundaries.vendor` to identify vendored code that should be audited separately.
+
+**If dependency-mapper.json exists**: Use `external_deps` as your starting inventory — it already maps each package to the files that use it and describes its purpose. Focus your analysis on assessing risk, versions, and vulnerabilities rather than re-discovering what's used. Use `external_services` to understand runtime dependencies beyond the package manifest.
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: Dependency Inventory
 
 Identify all dependency manifests in the project:

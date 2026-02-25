@@ -1,5 +1,24 @@
 Perform a thorough security analysis of this codebase. Cover all major vulnerability classes, surface concrete findings with file locations and line numbers, and propose specific fixes for each issue found. Do not produce vague warnings - find actual problems or explain clearly why each class of issue is not present.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/security-mapper.json 2>/dev/null
+cat .claude-learning/dependency-mapper.json 2>/dev/null
+```
+
+**If manifest.json exists**: Use `scope_boundaries.source` and `scope_boundaries.config` from the manifest to scope all grep commands below — target those directories instead of searching `.` blindly. Skip `scope_boundaries.vendor` and `scope_boundaries.generated`.
+
+**If security-mapper.json exists**: Load the prior findings. In your analysis, focus on extending them — verify the listed findings are still present, check if they've been partially addressed, and look for new issues introduced since the last run. Note which prior findings appear resolved.
+
+**If dependency-mapper.json exists**: Use `api_surface` to get the full list of routes for Phase 4 (auth coverage). Use `external_services` to understand what external systems handle sensitive data.
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: Reconnaissance
 
 Identify the attack surface:

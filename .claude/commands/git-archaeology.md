@@ -1,5 +1,25 @@
 Perform a deep archaeological analysis of this repository's git history. Your goal is to surface the patterns, decisions, evolution, and risk signals that live in the commit log - things that aren't visible from reading the code alone.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/git-history-miner.json 2>/dev/null
+```
+
+**If git-history-miner.json exists**: Prior institutional knowledge has been captured. Load it and use it as a baseline — note `decisions`, `gotchas`, `hotspots`, and `contributors` that were already found. In your analysis, focus on:
+- Extending the decision log (look for commits since `_last_incremental_update` if present)
+- Finding evolution patterns not yet captured
+- Validating or updating the ownership map
+- Surfacing any reverts or recurring fixes in recent history that post-date the last analysis
+
+**If manifest.json exists**: Use `top_level_modules` to scope per-module contributor analysis (Phase 5) without having to discover the module structure first.
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: Repository Vitals
 
 Run the following and analyze the output:

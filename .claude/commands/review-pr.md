@@ -1,5 +1,25 @@
 Perform a thorough, context-aware review of a pull request or set of changes. Unlike a surface-level diff review, this goes deep: check correctness, security, performance, test coverage, architectural fit, and consistency with the patterns of this specific codebase.
 
+## Context Bootstrap
+
+Before reviewing, check whether `/deep-learn` has been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/synthesis.json 2>/dev/null
+```
+
+**If synthesis.json exists**: This is the richest possible review context. Load it and use it as follows:
+- **Tier 1 conventions** → Phase 6 (consistency check): verify the PR follows documented naming, error handling, and file organization conventions
+- **Tier 1 implicit contracts** → Phase 7 (architectural review): check if the PR breaks any assumed contracts between modules
+- **Tier 1 gotchas** → Phase 2 (correctness): check if the PR touches any known dangerous areas
+- **Tier 2 security findings** → Phase 3: flag if the PR introduces patterns similar to known security issues, or if it modifies areas already identified as risky
+- **Tier 2 risk map** → Phase 4: flag if the PR changes high-severity failure-mode locations without addressing the underlying issue
+- **Tier 2 test coverage gaps** → Phase 5: flag if the PR modifies areas already known to have insufficient tests
+- **Tier 2 ownership** → output: note who to loop in for review based on the modules touched
+
+**If no context exists**: Proceed with the phases below. Consider running `/deep-learn` first for richer context on future reviews.
+
 ## Setup
 
 If a PR number or branch name is provided as an argument, fetch the diff. Otherwise, review staged/unstaged changes:

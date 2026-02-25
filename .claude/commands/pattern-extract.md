@@ -1,5 +1,25 @@
 Extract and document the coding patterns, conventions, and implicit standards of this codebase. The goal is to produce a living style guide derived entirely from what already exists - not what a linter enforces, but what the team actually does. This is essential for writing code that looks like it belongs here.
 
+## Context Bootstrap
+
+Before starting, check whether `/deep-learn` has already been run on this codebase:
+
+```bash
+cat .claude-learning-metadata.json 2>/dev/null
+cat .claude-learning/manifest.json 2>/dev/null
+cat .claude-learning/codebase-indexer.json 2>/dev/null
+```
+
+**If manifest.json exists**: Use `scope_boundaries.source` to scope all grep commands below — target those directories and skip vendor/generated/test code. Use `language` to select the right grep patterns for each phase.
+
+**If codebase-indexer.json exists**: The `conventions` array and `patterns` object already contain extracted conventions with evidence. Load them as a starting point. In your analysis:
+- Validate each convention with a fresh grep to confirm it's still accurate
+- Look for conventions that may have been missed (the prior analysis prioritized common patterns)
+- Deepen the evidence for high-confidence conventions with more `file:line` examples
+- Add the full style-guide narrative that `codebase-indexer` doesn't produce
+
+**If no context exists**: Proceed with the phases below, doing full discovery.
+
 ## Phase 1: Naming Conventions
 
 Analyze naming across the codebase:
