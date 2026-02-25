@@ -26,6 +26,7 @@ Key principles:
 | `/onboard` | Generate a developer onboarding guide from codebase analysis |
 | `/perf-audit` | Identify performance bottlenecks, N+1 queries, memory patterns, async issues |
 | `/review-pr` | Context-aware PR review using deep codebase knowledge |
+| `/impl-plan` | Produce a thorough implementation plan for a vetted change — constraints, risks, tradeoffs, testing, step-by-step order |
 
 ## How `/deep-learn` Works
 
